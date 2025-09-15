@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+// Ganti nama package sesuai dengan nama project Anda
+import 'basic_widget.dart'; // Import relatif, lebih sederhana
 
 void main() {
   runApp(const MyApp());
@@ -7,25 +9,16 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Praktikum Mobile Lanjut',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-      ), // ThemeData
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text('PRAKTIKUM MOBILE LANJUT'),
-        ),
-        body: const Center(
-          child: Text(
-            'Hallo nama saya Afifah Rahma Adibah Samudra dari manajemen informatika',
-            textAlign: TextAlign.center,
-          ),
-        ),
+        useMaterial3: true,
       ),
+      home: const BasicWidget(),
+      debugShowCheckedModeBanner: false, // Hilangkan banner debug
     );
   }
 }
