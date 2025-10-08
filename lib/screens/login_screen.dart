@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'signup_screen.dart';
+import 'dashboard_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   static const route = '/signin';
@@ -20,14 +21,34 @@ class _LoginScreenState extends State<LoginScreen> {
     super.dispose();
   }
 
+  void _handleLogin() {
+    final email = _email.text.trim();
+    final pass = _pass.text.trim();
+
+    if (email.isEmpty || pass.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Email dan password tidak boleh kosong')),
+      );
+      return;
+    }
+
+    // Contoh validasi dummy (kamu bisa ganti dengan Firebase atau API)
+    if (email == 'admin@test.com' && pass == '1234') {
+      Navigator.pushReplacementNamed(context, DashboardScreen.route);
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Email atau password salah')),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     // komponen kecil buat label + tanda *
     Widget requiredLabel(String text) => Row(
           children: [
             Text(text, style: const TextStyle(fontSize: 13)),
-            const Text('*',
-                style: TextStyle(color: Colors.red, fontSize: 13)),
+            const Text('*', style: TextStyle(color: Colors.red, fontSize: 13)),
           ],
         );
 
@@ -144,9 +165,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       Align(
                         alignment: Alignment.centerRight,
                         child: TextButton(
-                          style: TextButton.styleFrom(
-                            padding: EdgeInsets.zero,
-                          ),
+                          style: TextButton.styleFrom(padding: EdgeInsets.zero),
                           onPressed: () {},
                           child: const Text("Forgot Password?"),
                         ),
@@ -154,20 +173,14 @@ class _LoginScreenState extends State<LoginScreen> {
                       const SizedBox(height: 14),
 
                       // Tombol Sign In
-                      primaryButton('Sign In Now', () {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(content: Text('Sign In tapped')),
-                        );
-                      }),
+                      primaryButton('Sign In Now', _handleLogin),
                       const SizedBox(height: 14),
 
                       // Tombol Create Account
                       Center(
                         child: TextButton(
-                          onPressed: () => Navigator.pushNamed(
-                            context,
-                            SignupScreen.route,
-                          ),
+                          onPressed: () =>
+                              Navigator.pushNamed(context, SignupScreen.route),
                           child: const Text(
                             'Create New Account',
                             style: TextStyle(fontSize: 13),
